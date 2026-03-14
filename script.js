@@ -1,67 +1,110 @@
-// Banco de preguntas
 const preguntas = [
-  "¿Prefieres la playa o la montaña?",
-  "¿Café o té?",
-  "¿Perro o gato?",
-  "¿Madrugar o trasnochar?",
-  "¿Leer o ver series?",
-  "¿Chocolate o vainilla?",
-  "¿Viajar o quedarte en casa?",
-  "¿Música o silencio?",
-  "¿Frío o calor?",
-  "¿Ciudad o campo?"
+{p:"¿Cómo tomas decisiones importantes?", o:["Rápidamente","Pensándolo mucho","Siguiendo tu intuición"]},
+{p:"¿Qué haces ante un problema inesperado?", o:["Actuar rápido","Analizar primero","Esperar un poco"]},
+{p:"¿Cómo reaccionas ante un cambio?", o:["Me adapto rápido","Lo pienso bien","Lo siento primero"]},
+{p:"¿Confías en tu primera impresión?", o:["Siempre","A veces","Rara vez"]},
+{p:"¿Cómo eliges entre varias opciones?", o:["La más rápida","La más lógica","La que siento correcta"]},
+{p:"¿Qué haces si alguien te contradice?", o:["Defiendo mi idea","Escucho primero","Reflexiono"]},
+{p:"¿Cómo enfrentas una oportunidad nueva?", o:["La tomo","La analizo","La siento"]},
+{p:"¿Cómo reaccionas ante presión?", o:["Actúo rápido","Pienso más","Me dejo guiar"]},
+{p:"¿Qué haces cuando dudas?", o:["Decido ya","Investigo","Escucho mi intuición"]},
+{p:"¿Cómo tomas riesgos?", o:["Sin miedo","Con cálculo","Solo si lo siento bien"]},
+{p:"¿Qué haces ante un reto?", o:["Lo enfrento","Lo estudio","Lo observo"]},
+{p:"¿Cómo eliges a quién confiar?", o:["Por intuición","Por hechos","Por tiempo"]},
+{p:"¿Qué haces con una idea nueva?", o:["La intento","La analizo","La imagino"]},
+{p:"¿Cómo manejas el estrés?", o:["Actuando","Pensando","Respirando"]},
+{p:"¿Qué haces cuando te equivocas?", o:["Intento de nuevo","Reflexiono","Aprendo del momento"]},
 ];
 
-// Variables
-let preguntasUsadas = [];
-let cantidadPorPartida = 4;
+let preguntasJuego = [];
+let indice = 0;
 
-const preguntaDiv = document.getElementById("pregunta");
-const opcionesDiv = document.getElementById("opciones");
-const resultadoDiv = document.getElementById("resultado");
-const botonJugar = document.getElementById("botonJugar");
+const inicio = document.getElementById("inicio");
+const quiz = document.getElementById("quiz");
+const resultado = document.getElementById("resultado");
 
-function iniciarJuego() {
-  preguntasUsadas = [];
-  resultadoDiv.innerHTML = "";
-  mostrarPregunta();
+const preguntaEl = document.getElementById("pregunta");
+const opcionesEl = document.getElementById("opciones");
+const progresoEl = document.getElementById("progreso");
+
+const tipoInstinto = document.getElementById("tipoInstinto");
+const porcentajeEl = document.getElementById("porcentaje");
+
+document.getElementById("startBtn").onclick = iniciarJuego;
+document.getElementById("restartBtn").onclick = iniciarJuego;
+document.getElementById("shareBtn").onclick = compartir;
+
+function iniciarJuego(){
+
+inicio.classList.add("hidden");
+resultado.classList.add("hidden");
+quiz.classList.remove("hidden");
+
+preguntasJuego = preguntas.sort(()=>0.5-Math.random()).slice(0,7);
+
+indice=0;
+
+mostrarPregunta();
 }
 
-function mostrarPregunta() {
-  // Elegir preguntas aleatorias sin repetir
-  let preguntasAleatorias = [];
-  while(preguntasAleatorias.length < cantidadPorPartida){
-    let indice = Math.floor(Math.random() * preguntas.length);
-    let pregunta = preguntas[indice];
-    if(!preguntasAleatorias.includes(pregunta)){
-      preguntasAleatorias.push(pregunta);
-    }
-  }
-  preguntasUsadas = preguntasAleatorias;
-  mostrarSiguientePregunta(0);
+function mostrarPregunta(){
+
+const q = preguntasJuego[indice];
+
+progresoEl.innerText = "Pregunta "+(indice+1)+" / 7";
+
+preguntaEl.innerText = q.p;
+
+opcionesEl.innerHTML="";
+
+q.o.forEach(op=>{
+const btn=document.createElement("button");
+btn.innerText=op;
+
+btn.onclick=()=>{
+indice++;
+
+if(indice<7){
+mostrarPregunta();
+}else{
+mostrarResultado();
+}
+};
+
+opcionesEl.appendChild(btn);
+});
+
 }
 
-function mostrarSiguientePregunta(indice) {
-  if(indice >= preguntasUsadas.length){
-    mostrarResultado();
-    return;
-  }
+function mostrarResultado(){
 
-  preguntaDiv.innerText = preguntasUsadas[indice];
-  opcionesDiv.innerHTML = "";
+quiz.classList.add("hidden");
+resultado.classList.remove("hidden");
 
-  ["Sí","No"].forEach(opcion => {
-    const boton = document.createElement("button");
-    boton.innerText = opcion;
-    boton.onclick = () => mostrarSiguientePregunta(indice + 1);
-    opcionesDiv.appendChild(boton);
-  });
+const instintos=[
+"Instinto Analítico 🧠",
+"Instinto Intuitivo ⚡",
+"Instinto Audaz 🔥",
+"Instinto Sereno 🌊"
+];
+
+const elegido = instintos[Math.floor(Math.random()*instintos.length)];
+
+tipoInstinto.innerText=elegido;
+
+const porcentaje = Math.floor(Math.random()*11)+60;
+
+porcentajeEl.innerText="El "+porcentaje+"% de las personas piensan como tú.";
 }
 
-function mostrarResultado() {
-  preguntaDiv.innerText = "";
-  opcionesDiv.innerHTML = "";
-  resultadoDiv.innerHTML = "✨ Tu instinto dice algo especial. Tu instinto puede cambiar. Intenta otra vez. H.B.G. ✨";
-}
+function compartir(){
 
-botonJugar.addEventListener("click", iniciarJuego);
+const texto =
+"Descubrí mi instinto en INSTINTO 🧠\n\n"+
+tipoInstinto.innerText+"\n"+
+porcentajeEl.innerText+"\n\n"+
+"Tu instinto puede cambiar. Intenta otra vez.\n\nH.B.G.";
+
+navigator.share({text:texto});
+
+}
