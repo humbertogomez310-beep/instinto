@@ -2,22 +2,355 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Instinto</title>
-<link rel="stylesheet" href="style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>INSTINTO</title>
+
+<style>
+
+body{
+background:#111;
+color:white;
+font-family:Arial;
+text-align:center;
+margin:0;
+padding:40px;
+}
+
+#app{
+max-width:500px;
+margin:auto;
+}
+
+h1{
+font-size:48px;
+}
+
+h2{
+font-size:30px;
+}
+
+p{
+font-size:22px;
+}
+
+button{
+padding:18px;
+margin:10px 0;
+font-size:20px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+width:100%;
+}
+
+#start{
+background:#ff7a00;
+color:white;
+}
+
+.opcion{
+background:#222;
+color:white;
+}
+
+#share{
+background:#333;
+color:white;
+}
+
+#restart{
+background:#ff7a00;
+color:white;
+}
+
+#soundToggle{
+background:#444;
+color:white;
+width:auto;
+padding:10px 15px;
+font-size:18px;
+}
+
+.hidden{
+display:none;
+}
+
+#progreso{
+margin-bottom:20px;
+font-size:20px;
+color:#aaa;
+}
+
+.frase{
+margin-top:20px;
+color:#aaa;
+}
+
+</style>
 </head>
+
 <body>
-  <div class="container">
-    <h1>INSTINTO 🧠</h1>
-    <p>Tu instinto puede cambiar. Intenta otra vez.</p>
 
-    <div id="juego">
-      <div id="pregunta"></div>
-      <div id="opciones"></div>
-      <div id="resultado"></div>
-      <button id="botonJugar">Jugar</button>
-    </div>
-  </div>
+<div id="app">
 
-  <script src="script.js"></script>
+<button id="soundToggle">🔊</button>
+
+<h1>INSTINTO 🧠</h1>
+
+<div id="inicio">
+
+<p>
+Responde 7 preguntas rápidas y descubre qué tipo de instinto guía tus decisiones.
+</p>
+
+<button id="start">Jugar</button>
+
+<p>H.B.G.</p>
+
+</div>
+
+<div id="quiz" class="hidden">
+
+<div id="progreso"></div>
+
+<h2 id="pregunta"></h2>
+
+<div id="opciones"></div>
+
+<p class="frase">Confía en tu instinto.</p>
+
+</div>
+
+<div id="final" class="hidden">
+
+<h2 id="resultado"></h2>
+
+<p id="porcentaje"></p>
+
+<p>H.B.G.</p>
+
+<p>Tu instinto puede cambiar. Intenta otra vez.</p>
+
+<button id="share">Compartir</button>
+
+<button id="restart">Volver a jugar</button>
+
+</div>
+
+</div>
+
+<script>
+
+let sonido=true
+
+function play(freq){
+
+if(!sonido) return
+
+let ctx=new (window.AudioContext||window.webkitAudioContext)()
+
+let o=ctx.createOscillator()
+
+let g=ctx.createGain()
+
+o.connect(g)
+
+g.connect(ctx.destination)
+
+o.frequency.value=freq
+
+o.start()
+
+g.gain.exponentialRampToValueAtTime(0.0001,ctx.currentTime+0.3)
+
+}
+
+document.getElementById("soundToggle").onclick=()=>{
+
+sonido=!sonido
+
+document.getElementById("soundToggle").innerText=sonido?"🔊":"🔇"
+
+}
+
+const preguntas=[
+
+"¿Cómo tomas decisiones importantes?",
+"¿Qué haces ante un problema inesperado?",
+"¿Confías en tu primera impresión?",
+"¿Cómo reaccionas ante cambios?",
+"¿Cómo tomas riesgos?",
+"¿Cómo eliges entre varias opciones?",
+"¿Qué haces cuando dudas?",
+"¿Cómo reaccionas ante presión?",
+"¿Qué haces ante un reto?",
+"¿Cómo manejas el estrés?",
+"¿Qué haces si alguien te contradice?",
+"¿Qué haces con una oportunidad nueva?",
+"¿Cómo eliges a quién confiar?",
+"¿Qué haces cuando te equivocas?",
+"¿Cómo enfrentas un problema difícil?",
+"¿Cómo reaccionas ante una sorpresa?",
+"¿Cómo tomas decisiones rápidas?",
+"¿Qué haces ante algo desconocido?",
+"¿Cómo reaccionas ante críticas?",
+"¿Qué haces cuando algo falla?",
+"¿Cómo reaccionas ante competencia?",
+"¿Qué haces si algo te preocupa?",
+"¿Cómo tomas decisiones bajo presión?",
+"¿Qué haces ante una discusión?",
+"¿Cómo reaccionas ante una oportunidad?",
+"¿Qué haces si te sientes inseguro?",
+"¿Cómo decides entre dos caminos?",
+"¿Qué haces cuando algo te sorprende?",
+"¿Cómo reaccionas ante una injusticia?",
+"¿Qué haces ante un cambio grande?",
+"¿Cómo reaccionas ante un desafío?",
+"¿Qué haces si algo te molesta?",
+"¿Cómo reaccionas ante una duda?",
+"¿Qué haces si algo te emociona?",
+"¿Cómo reaccionas ante una noticia?",
+"¿Qué haces ante una decisión difícil?",
+"¿Cómo reaccionas ante una pérdida?",
+"¿Qué haces ante una oportunidad única?",
+"¿Cómo reaccionas ante presión social?",
+"¿Qué haces si algo te preocupa mucho?",
+"¿Cómo reaccionas ante un problema serio?",
+"¿Qué haces ante algo inesperado?",
+"¿Cómo reaccionas ante una crítica fuerte?",
+"¿Qué haces cuando necesitas decidir rápido?",
+"¿Cómo reaccionas ante una situación nueva?",
+"¿Qué haces si algo no sale bien?",
+"¿Cómo reaccionas ante un conflicto?",
+"¿Qué haces si alguien te desafía?",
+"¿Cómo reaccionas ante un cambio repentino?",
+"¿Qué haces si tienes que elegir ya?"
+
+]
+
+const opciones=[
+
+"Actuar rápido ⚡",
+"Pensarlo bien 🧠",
+"Seguir mi intuición 🌙"
+
+]
+
+const instintos=[
+
+"Instinto Analítico 🧠",
+"Instinto Intuitivo ⚡",
+"Instinto Audaz 🔥",
+"Instinto Sereno 🌊"
+
+]
+
+let juego=[]
+let index=0
+
+const inicio=document.getElementById("inicio")
+const quiz=document.getElementById("quiz")
+const final=document.getElementById("final")
+
+const pregunta=document.getElementById("pregunta")
+const opcionesDiv=document.getElementById("opciones")
+const progreso=document.getElementById("progreso")
+
+const resultado=document.getElementById("resultado")
+const porcentaje=document.getElementById("porcentaje")
+
+document.getElementById("start").onclick=iniciar
+document.getElementById("restart").onclick=iniciar
+document.getElementById("share").onclick=compartir
+
+function iniciar(){
+
+play(400)
+
+inicio.classList.add("hidden")
+final.classList.add("hidden")
+quiz.classList.remove("hidden")
+
+juego=preguntas.sort(()=>0.5-Math.random()).slice(0,7)
+
+index=0
+
+mostrar()
+
+}
+
+function mostrar(){
+
+pregunta.innerText=juego[index]
+
+progreso.innerText="Pregunta "+(index+1)+" / 7"
+
+opcionesDiv.innerHTML=""
+
+opciones.forEach(o=>{
+
+let b=document.createElement("button")
+
+b.className="opcion"
+
+b.innerText=o
+
+b.onclick=()=>{
+
+play(600)
+
+index++
+
+if(index<7){
+
+mostrar()
+
+}else{
+
+terminar()
+
+}
+
+}
+
+opcionesDiv.appendChild(b)
+
+})
+
+}
+
+function terminar(){
+
+play(200)
+
+quiz.classList.add("hidden")
+
+final.classList.remove("hidden")
+
+let tipo=instintos[Math.floor(Math.random()*instintos.length)]
+
+resultado.innerText=tipo
+
+let p=Math.floor(Math.random()*11)+60
+
+porcentaje.innerText="El "+p+"% de las personas piensan como tú."
+
+}
+
+function compartir(){
+
+let texto=
+"Descubrí mi instinto en INSTINTO 🧠\n\n"+
+resultado.innerText+"\n"+
+porcentaje.innerText+
+"\n\nTu instinto puede cambiar. Intenta otra vez.\n\nH.B.G."
+
+navigator.share({text:texto})
+
+}
+
+</script>
+
 </body>
 </html>
