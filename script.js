@@ -1,67 +1,65 @@
-// Banco de preguntas
-const preguntas = [
-  "¿Prefieres la playa o la montaña?",
-  "¿Café o té?",
-  "¿Perro o gato?",
-  "¿Madrugar o trasnochar?",
-  "¿Leer o ver series?",
-  "¿Chocolate o vainilla?",
-  "¿Viajar o quedarte en casa?",
-  "¿Música o silencio?",
-  "¿Frío o calor?",
-  "¿Ciudad o campo?"
-];
-
-// Variables
-let preguntasUsadas = [];
-let cantidadPorPartida = 4;
-
-const preguntaDiv = document.getElementById("pregunta");
-const opcionesDiv = document.getElementById("opciones");
-const resultadoDiv = document.getElementById("resultado");
-const botonJugar = document.getElementById("botonJugar");
-
-function iniciarJuego() {
-  preguntasUsadas = [];
-  resultadoDiv.innerHTML = "";
-  mostrarPregunta();
+body{
+background:#111;
+color:white;
+font-family:Arial, Helvetica, sans-serif;
+text-align:center;
+margin:0;
+padding:20px;
 }
 
-function mostrarPregunta() {
-  // Elegir preguntas aleatorias sin repetir
-  let preguntasAleatorias = [];
-  while(preguntasAleatorias.length < cantidadPorPartida){
-    let indice = Math.floor(Math.random() * preguntas.length);
-    let pregunta = preguntas[indice];
-    if(!preguntasAleatorias.includes(pregunta)){
-      preguntasAleatorias.push(pregunta);
-    }
-  }
-  preguntasUsadas = preguntasAleatorias;
-  mostrarSiguientePregunta(0);
+h1{
+font-size:36px;
+margin-bottom:20px;
 }
 
-function mostrarSiguientePregunta(indice) {
-  if(indice >= preguntasUsadas.length){
-    mostrarResultado();
-    return;
-  }
-
-  preguntaDiv.innerText = preguntasUsadas[indice];
-  opcionesDiv.innerHTML = "";
-
-  ["Sí","No"].forEach(opcion => {
-    const boton = document.createElement("button");
-    boton.innerText = opcion;
-    boton.onclick = () => mostrarSiguientePregunta(indice + 1);
-    opcionesDiv.appendChild(boton);
-  });
+button{
+padding:15px 25px;
+margin:10px;
+font-size:18px;
+border:none;
+border-radius:8px;
+cursor:pointer;
 }
 
-function mostrarResultado() {
-  preguntaDiv.innerText = "";
-  opcionesDiv.innerHTML = "";
-  resultadoDiv.innerHTML = "✨ Tu instinto dice algo especial. Tu instinto puede cambiar. Intenta otra vez. H.B.G. ✨";
+#startBtn{
+background:#ff7a00;
+color:white;
 }
 
-botonJugar.addEventListener("click", iniciarJuego);
+#opciones button{
+display:block;
+width:90%;
+margin:10px auto;
+background:#222;
+color:white;
+}
+
+#shareBtn{
+background:#333;
+color:white;
+}
+
+#restartBtn{
+background:#ff7a00;
+color:white;
+}
+
+.hidden{
+display:none;
+}
+
+#progreso{
+margin-bottom:20px;
+font-size:18px;
+}
+
+.frase{
+margin-top:20px;
+color:#bbb;
+}
+
+.firma{
+margin-top:40px;
+font-size:14px;
+color:#777;
+}
