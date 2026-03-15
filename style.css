@@ -1,23 +1,32 @@
 body{
 background:#111;
 color:white;
-font-family:Arial, Helvetica, sans-serif;
+font-family:Arial;
 text-align:center;
 margin:0;
-padding:20px;
+padding:30px;
+}
+
+#app{
+max-width:500px;
+margin:auto;
 }
 
 h1{
-font-size:36px;
-margin-bottom:20px;
+font-size:40px;
+margin-bottom:25px;
+}
+
+h2{
+font-size:26px;
 }
 
 button{
-padding:15px 25px;
+padding:16px 25px;
 margin:10px;
 font-size:18px;
 border:none;
-border-radius:8px;
+border-radius:10px;
 cursor:pointer;
 }
 
@@ -26,10 +35,15 @@ background:#ff7a00;
 color:white;
 }
 
+#soundBtn{
+background:#444;
+color:white;
+}
+
 #opciones button{
 display:block;
 width:90%;
-margin:10px auto;
+margin:12px auto;
 background:#222;
 color:white;
 }
@@ -48,18 +62,33 @@ color:white;
 display:none;
 }
 
-#progreso{
-margin-bottom:20px;
-font-size:18px;
+.frase{
+margin-top:15px;
+color:#bbb;
+font-size:16px;
 }
 
-.frase{
-margin-top:20px;
-color:#bbb;
+#progreso{
+font-size:18px;
+margin-bottom:15px;
+}
+
+#barra{
+background:#333;
+height:20px;
+border-radius:10px;
+margin-top:10px;
+overflow:hidden;
+}
+
+#relleno{
+background:#ff7a00;
+height:100%;
+width:0%;
+transition:width 1.5s ease;
 }
 
 .firma{
 margin-top:40px;
-font-size:14px;
 color:#777;
 }

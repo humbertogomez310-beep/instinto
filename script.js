@@ -1,110 +1,232 @@
-const preguntas = [
-{p:"¿Cómo tomas decisiones importantes?", o:["Rápidamente","Pensándolo mucho","Siguiendo tu intuición"]},
-{p:"¿Qué haces ante un problema inesperado?", o:["Actuar rápido","Analizar primero","Esperar un poco"]},
-{p:"¿Cómo reaccionas ante un cambio?", o:["Me adapto rápido","Lo pienso bien","Lo siento primero"]},
-{p:"¿Confías en tu primera impresión?", o:["Siempre","A veces","Rara vez"]},
-{p:"¿Cómo eliges entre varias opciones?", o:["La más rápida","La más lógica","La que siento correcta"]},
-{p:"¿Qué haces si alguien te contradice?", o:["Defiendo mi idea","Escucho primero","Reflexiono"]},
-{p:"¿Cómo enfrentas una oportunidad nueva?", o:["La tomo","La analizo","La siento"]},
-{p:"¿Cómo reaccionas ante presión?", o:["Actúo rápido","Pienso más","Me dejo guiar"]},
-{p:"¿Qué haces cuando dudas?", o:["Decido ya","Investigo","Escucho mi intuición"]},
-{p:"¿Cómo tomas riesgos?", o:["Sin miedo","Con cálculo","Solo si lo siento bien"]},
-{p:"¿Qué haces ante un reto?", o:["Lo enfrento","Lo estudio","Lo observo"]},
-{p:"¿Cómo eliges a quién confiar?", o:["Por intuición","Por hechos","Por tiempo"]},
-{p:"¿Qué haces con una idea nueva?", o:["La intento","La analizo","La imagino"]},
-{p:"¿Cómo manejas el estrés?", o:["Actuando","Pensando","Respirando"]},
-{p:"¿Qué haces cuando te equivocas?", o:["Intento de nuevo","Reflexiono","Aprendo del momento"]},
-];
+let preguntas=[
 
-let preguntasJuego = [];
-let indice = 0;
+{p:"¿Cómo tomas decisiones importantes?",
+r:[
+{t:"Actuar rápido ⚡",v:"rapido"},
+{t:"Analizar todo 🧠",v:"analitico"},
+{t:"Seguir intuición 🌙",v:"intuitivo"}],
+f:"Tu primera reacción revela mucho."},
 
-const inicio = document.getElementById("inicio");
-const quiz = document.getElementById("quiz");
-const resultado = document.getElementById("resultado");
+{p:"¿Qué haces ante un problema inesperado?",
+r:[
+{t:"Resolverlo ya",v:"rapido"},
+{t:"Pensar opciones",v:"analitico"},
+{t:"Observar primero",v:"intuitivo"}],
+f:"Los problemas muestran tu instinto."},
 
-const preguntaEl = document.getElementById("pregunta");
-const opcionesEl = document.getElementById("opciones");
-const progresoEl = document.getElementById("progreso");
+{p:"¿Cómo reaccionas ante una crítica?",
+r:[
+{t:"Responder rápido",v:"rapido"},
+{t:"Escuchar razones",v:"analitico"},
+{t:"Reflexionar",v:"intuitivo"}],
+f:"La reacción revela carácter."},
 
-const tipoInstinto = document.getElementById("tipoInstinto");
-const porcentajeEl = document.getElementById("porcentaje");
+{p:"¿Qué haces ante una oportunidad nueva?",
+r:[
+{t:"Tomarla ya",v:"rapido"},
+{t:"Evaluarla",v:"analitico"},
+{t:"Sentir si es correcto",v:"intuitivo"}],
+f:"Las oportunidades revelan impulso."},
 
-document.getElementById("startBtn").onclick = iniciarJuego;
-document.getElementById("restartBtn").onclick = iniciarJuego;
-document.getElementById("shareBtn").onclick = compartir;
+{p:"¿Cómo reaccionas ante presión?",
+r:[
+{t:"Actuar rápido",v:"rapido"},
+{t:"Pensar antes",v:"analitico"},
+{t:"Respirar y sentir",v:"intuitivo"}],
+f:"La presión revela personalidad."},
 
-function iniciarJuego(){
+{p:"¿Cómo eliges entre varias opciones?",
+r:[
+{t:"La primera",v:"rapido"},
+{t:"La más lógica",v:"analitico"},
+{t:"La que siento",v:"intuitivo"}],
+f:"Elegir también es instinto."},
 
-inicio.classList.add("hidden");
-resultado.classList.add("hidden");
-quiz.classList.remove("hidden");
+{p:"¿Qué haces cuando dudas?",
+r:[
+{t:"Decidir ya",v:"rapido"},
+{t:"Investigar más",v:"analitico"},
+{t:"Escuchar intuición",v:"intuitivo"}],
+f:"La duda también habla."},
 
-preguntasJuego = preguntas.sort(()=>0.5-Math.random()).slice(0,7);
+{p:"¿Cómo reaccionas ante cambios?",
+r:[
+{t:"Adaptarme rápido",v:"rapido"},
+{t:"Analizar situación",v:"analitico"},
+{t:"Observar primero",v:"intuitivo"}],
+f:"Cambiar revela reacción."},
 
-indice=0;
+{p:"¿Qué haces ante un reto?",
+r:[
+{t:"Enfrentarlo",v:"rapido"},
+{t:"Estudiarlo",v:"analitico"},
+{t:"Esperar momento",v:"intuitivo"}],
+f:"Los retos revelan carácter."},
 
-mostrarPregunta();
+{p:"¿Cómo reaccionas ante lo desconocido?",
+r:[
+{t:"Explorar",v:"rapido"},
+{t:"Analizar",v:"analitico"},
+{t:"Observar",v:"intuitivo"}],
+f:"Lo desconocido revela curiosidad."}
+
+]
+
+let juego=[]
+let index=0
+
+let puntos={
+rapido:0,
+analitico:0,
+intuitivo:0
 }
 
-function mostrarPregunta(){
+let sonido=localStorage.getItem("sonido")!=="off"
 
-const q = preguntasJuego[indice];
+const startBtn=document.getElementById("startBtn")
+const soundBtn=document.getElementById("soundBtn")
+const pregunta=document.getElementById("pregunta")
+const frase=document.getElementById("frase")
+const opciones=document.getElementById("opciones")
+const progreso=document.getElementById("progreso")
 
-progresoEl.innerText = "Pregunta "+(indice+1)+" / 7";
+const inicio=document.getElementById("inicio")
+const juegoDiv=document.getElementById("juego")
+const resultado=document.getElementById("resultado")
 
-preguntaEl.innerText = q.p;
+const instinto=document.getElementById("instinto")
+const porcentaje=document.getElementById("porcentaje")
 
-opcionesEl.innerHTML="";
+soundBtn.innerText=sonido?"🔊 Sonido":"🔇 Silencio"
 
-q.o.forEach(op=>{
-const btn=document.createElement("button");
-btn.innerText=op;
+function play(freq){
 
-btn.onclick=()=>{
-indice++;
+if(!sonido)return
 
-if(indice<7){
-mostrarPregunta();
+let ctx=new AudioContext()
+let o=ctx.createOscillator()
+let g=ctx.createGain()
+
+o.connect(g)
+g.connect(ctx.destination)
+
+o.frequency.value=freq
+o.start()
+
+g.gain.exponentialRampToValueAtTime(0.00001,ctx.currentTime+0.2)
+
+}
+
+soundBtn.onclick=()=>{
+
+sonido=!sonido
+
+localStorage.setItem("sonido",sonido?"on":"off")
+
+soundBtn.innerText=sonido?"🔊 Sonido":"🔇 Silencio"
+
+}
+
+startBtn.onclick=()=>{
+
+play(700)
+
+inicio.classList.add("hidden")
+juegoDiv.classList.remove("hidden")
+
+juego=[...preguntas].sort(()=>0.5-Math.random()).slice(0,7)
+
+index=0
+
+mostrar()
+
+}
+
+function mostrar(){
+
+pregunta.innerText=juego[index].p
+frase.innerText=juego[index].f
+
+progreso.innerText="Pregunta "+(index+1)+" / 7"
+
+opciones.innerHTML=""
+
+juego[index].r.forEach(op=>{
+
+let b=document.createElement("button")
+
+b.innerText=op.t
+
+b.onclick=()=>{
+
+play(600)
+
+puntos[op.v]++
+
+index++
+
+if(index<7){
+mostrar()
 }else{
-mostrarResultado();
+terminar()
 }
-};
-
-opcionesEl.appendChild(btn);
-});
 
 }
 
-function mostrarResultado(){
+opciones.appendChild(b)
 
-quiz.classList.add("hidden");
-resultado.classList.remove("hidden");
+})
 
-const instintos=[
-"Instinto Analítico 🧠",
-"Instinto Intuitivo ⚡",
-"Instinto Audaz 🔥",
-"Instinto Sereno 🌊"
-];
-
-const elegido = instintos[Math.floor(Math.random()*instintos.length)];
-
-tipoInstinto.innerText=elegido;
-
-const porcentaje = Math.floor(Math.random()*11)+60;
-
-porcentajeEl.innerText="El "+porcentaje+"% de las personas piensan como tú.";
 }
 
-function compartir(){
+function terminar(){
 
-const texto =
-"Descubrí mi instinto en INSTINTO 🧠\n\n"+
-tipoInstinto.innerText+"\n"+
-porcentajeEl.innerText+"\n\n"+
-"Tu instinto puede cambiar. Intenta otra vez.\n\nH.B.G.";
+juegoDiv.classList.add("hidden")
+resultado.classList.remove("hidden")
 
-navigator.share({text:texto});
+let tipo=""
+
+if(puntos.rapido>=puntos.analitico && puntos.rapido>=puntos.intuitivo){
+tipo="Instinto Rápido ⚡"
+}
+
+else if(puntos.analitico>=puntos.rapido && puntos.analitico>=puntos.intuitivo){
+tipo="Instinto Analítico 🧠"
+}
+
+else{
+tipo="Instinto Intuitivo 🌙"
+}
+
+instinto.innerText=tipo
+
+let p=Math.floor(Math.random()*11)+60
+
+porcentaje.innerText=p+"% de las personas piensan como tú."
+
+setTimeout(()=>{
+
+document.getElementById("relleno").style.width=p+"%"
+
+},200)
+
+}
+
+document.getElementById("shareBtn").onclick=()=>{
+
+let text="Mi resultado en INSTINTO 🧠\n\n"+
+instinto.innerText+"\n"+
+porcentaje.innerText+"\n\n"+
+"Tu instinto puede cambiar. Intenta otra vez.\n\nH.B.G."
+
+navigator.share?
+navigator.share({text:text,url:location.href}):
+alert(text)
+
+}
+
+document.getElementById("restartBtn").onclick=()=>{
+
+location.reload()
 
 }
