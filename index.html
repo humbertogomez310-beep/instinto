@@ -1,353 +1,60 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>INSTINTO</title>
-
-<style>
-
-body{
-background:#111;
-color:white;
-font-family:Arial;
-text-align:center;
-margin:0;
-padding:40px;
-}
-
-#app{
-max-width:500px;
-margin:auto;
-}
-
-h1{
-font-size:48px;
-}
-
-h2{
-font-size:30px;
-}
-
-p{
-font-size:22px;
-}
-
-button{
-padding:18px;
-margin:10px 0;
-font-size:20px;
-border:none;
-border-radius:10px;
-cursor:pointer;
-width:100%;
-}
-
-#start{
-background:#ff7a00;
-color:white;
-}
-
-.opcion{
-background:#222;
-color:white;
-}
-
-#share{
-background:#333;
-color:white;
-}
-
-#restart{
-background:#ff7a00;
-color:white;
-}
-
-#sound{
-background:#444;
-width:auto;
-padding:10px 15px;
-}
-
-.hidden{
-display:none;
-}
-
-#progreso{
-margin-bottom:20px;
-color:#aaa;
-}
-
-.barra{
-background:#333;
-height:20px;
-border-radius:10px;
-margin-top:10px;
-}
-
-.relleno{
-background:#ff7a00;
-height:100%;
-width:0%;
-border-radius:10px;
-}
-
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>INSTINTO</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-
-<div id="app">
-
-<button id="sound">🔊</button>
-
-<h1>INSTINTO 🧠</h1>
-
-<div id="inicio">
-
-<p>
-Responde 7 preguntas rápidas y descubre qué tipo de instinto guía tus decisiones.
-</p>
-
-<button id="start">Jugar</button>
-
-<p>H.B.G.</p>
-
-</div>
-
-<div id="quiz" class="hidden">
-
-<div id="progreso"></div>
-
-<h2 id="pregunta"></h2>
-
-<div id="opciones"></div>
-
-<p style="color:#aaa">Confía en tu instinto.</p>
-
-</div>
-
-<div id="final" class="hidden">
-
-<h2 id="resultado"></h2>
-
-<p id="porcentaje"></p>
-
-<div class="barra">
-<div class="relleno" id="barra"></div>
-</div>
-
-<p>H.B.G.</p>
-
-<p>Tu instinto puede cambiar. Intenta otra vez.</p>
-
-<button id="share">Compartir</button>
-<button id="restart">Volver a jugar</button>
-
-</div>
-
-</div>
-
-<script>
-
-let sonido=true
-
-function play(f){
-
-if(!sonido)return
-
-let ctx=new (window.AudioContext||window.webkitAudioContext)()
-
-let o=ctx.createOscillator()
-
-let g=ctx.createGain()
-
-o.connect(g)
-
-g.connect(ctx.destination)
-
-o.frequency.value=f
-
-o.start()
-
-g.gain.exponentialRampToValueAtTime(0.0001,ctx.currentTime+0.3)
-
-}
-
-document.getElementById("sound").onclick=()=>{
-
-sonido=!sonido
-
-document.getElementById("sound").innerText=sonido?"🔊":"🔇"
-
-}
-
-const preguntas=[
-
-{p:"¿Cómo tomas decisiones importantes?",r:["Actuar rápido ⚡","Analizar bien 🧠","Seguir mi intuición 🌙"]},
-{p:"¿Qué haces ante un problema inesperado?",r:["Resolverlo rápido","Pensarlo primero","Esperar un momento"]},
-{p:"¿Confías en tu primera impresión?",r:["Siempre","A veces","Prefiero comprobar"]},
-{p:"¿Cómo reaccionas ante cambios?",r:["Me adapto rápido","Lo analizo","Escucho mi intuición"]},
-{p:"¿Cómo tomas riesgos?",r:["Sin pensarlo","Con cálculo","Solo si lo siento"]},
-{p:"¿Cómo eliges entre varias opciones?",r:["La más rápida","La más lógica","La que me atrae"]},
-{p:"¿Qué haces cuando dudas?",r:["Decido ya","Investigo","Escucho mi instinto"]},
-{p:"¿Cómo reaccionas ante presión?",r:["Actúo rápido","Pienso más","Respiro"]},
-{p:"¿Qué haces ante un reto?",r:["Lo enfrento","Lo estudio","Espero"]},
-{p:"¿Cómo manejas el estrés?",r:["Actuando","Pensando","Relajándome"]},
-{p:"¿Qué haces si alguien te contradice?",r:["Defiendo mi punto","Escucho","Reflexiono"]},
-{p:"¿Qué haces con una oportunidad nueva?",r:["La tomo","La analizo","La siento"]},
-{p:"¿Cómo eliges a quién confiar?",r:["Por intuición","Por pruebas","Por tiempo"]},
-{p:"¿Qué haces cuando te equivocas?",r:["Intento otra vez","Analizo","Aprendo"]},
-{p:"¿Cómo enfrentas un problema difícil?",r:["Actúo rápido","Pienso","Espero"]},
-{p:"¿Cómo reaccionas ante una sorpresa?",r:["Actúo","Analizo","Observo"]},
-{p:"¿Cómo decides rápido?",r:["Por impulso","Por lógica","Por intuición"]},
-{p:"¿Qué haces ante algo nuevo?",r:["Probarlo","Investigar","Observar"]},
-{p:"¿Cómo reaccionas ante críticas?",r:["Defenderme","Escuchar","Pensar"]},
-{p:"¿Qué haces cuando algo falla?",r:["Intentar otra vez","Analizar","Esperar"]},
-{p:"¿Cómo reaccionas ante competencia?",r:["Competir","Planear","Observar"]},
-{p:"¿Qué haces si algo te preocupa?",r:["Resolverlo","Pensarlo","Calmarme"]},
-{p:"¿Cómo decides bajo presión?",r:["Rápido","Pensado","Instintivo"]},
-{p:"¿Qué haces ante discusión?",r:["Hablar","Pensar","Escuchar"]},
-{p:"¿Cómo reaccionas ante oportunidad?",r:["Tomarla","Analizarla","Sentirla"]},
-{p:"¿Qué haces si dudas?",r:["Decidir","Investigar","Esperar"]},
-{p:"¿Cómo eliges camino?",r:["Rápido","Lógico","Intuitivo"]},
-{p:"¿Qué haces ante sorpresa?",r:["Actuar","Pensar","Observar"]},
-{p:"¿Cómo reaccionas ante injusticia?",r:["Actuar","Analizar","Reflexionar"]},
-{p:"¿Qué haces ante cambio grande?",r:["Adaptarme","Pensarlo","Sentirlo"]},
-{p:"¿Cómo reaccionas ante desafío?",r:["Aceptarlo","Analizarlo","Esperar"]},
-{p:"¿Qué haces si algo molesta?",r:["Decirlo","Pensarlo","Ignorarlo"]},
-{p:"¿Cómo reaccionas ante duda?",r:["Actuar","Analizar","Sentir"]},
-{p:"¿Qué haces si algo emociona?",r:["Actuar","Pensar","Sentir"]},
-{p:"¿Cómo reaccionas ante noticia?",r:["Responder","Analizar","Esperar"]},
-{p:"¿Qué haces ante decisión difícil?",r:["Elegir rápido","Pensar","Sentir"]},
-{p:"¿Cómo reaccionas ante pérdida?",r:["Actuar","Reflexionar","Aceptar"]},
-{p:"¿Qué haces ante oportunidad única?",r:["Tomarla","Evaluarla","Sentirla"]},
-{p:"¿Cómo reaccionas ante presión social?",r:["Actuar","Pensar","Ignorar"]},
-{p:"¿Qué haces si te preocupa algo?",r:["Resolver","Pensar","Esperar"]},
-{p:"¿Cómo reaccionas ante problema serio?",r:["Actuar","Planear","Reflexionar"]},
-{p:"¿Qué haces ante algo inesperado?",r:["Responder","Analizar","Esperar"]},
-{p:"¿Cómo reaccionas ante crítica fuerte?",r:["Defender","Escuchar","Pensar"]},
-{p:"¿Qué haces si debes decidir rápido?",r:["Elegir","Pensar","Sentir"]},
-{p:"¿Cómo reaccionas ante situación nueva?",r:["Actuar","Analizar","Observar"]},
-{p:"¿Qué haces si algo sale mal?",r:["Intentar","Analizar","Esperar"]},
-{p:"¿Cómo reaccionas ante conflicto?",r:["Hablar","Pensar","Escuchar"]},
-{p:"¿Qué haces si alguien te desafía?",r:["Aceptar","Pensar","Evitar"]},
-{p:"¿Cómo reaccionas ante cambio repentino?",r:["Adaptarme","Analizar","Observar"]},
-{p:"¿Qué haces si debes elegir ya?",r:["Elegir","Pensar","Sentir"]}
-
-]
-
-const instintos=[
-"Instinto Analítico 🧠",
-"Instinto Intuitivo ⚡",
-"Instinto Audaz 🔥",
-"Instinto Sereno 🌊"
-]
-
-let juego=[]
-let i=0
-
-const inicio=document.getElementById("inicio")
-const quiz=document.getElementById("quiz")
-const final=document.getElementById("final")
-
-const pregunta=document.getElementById("pregunta")
-const opciones=document.getElementById("opciones")
-const progreso=document.getElementById("progreso")
-
-const resultado=document.getElementById("resultado")
-const porcentaje=document.getElementById("porcentaje")
-const barra=document.getElementById("barra")
-
-document.getElementById("start").onclick=iniciar
-document.getElementById("restart").onclick=iniciar
-document.getElementById("share").onclick=compartir
-
-function iniciar(){
-
-play(400)
-
-inicio.classList.add("hidden")
-final.classList.add("hidden")
-quiz.classList.remove("hidden")
-
-juego=preguntas.sort(()=>0.5-Math.random()).slice(0,7)
-
-i=0
-
-mostrar()
-
-}
-
-function mostrar(){
-
-pregunta.innerText=juego[i].p
-
-progreso.innerText="Pregunta "+(i+1)+" / 7"
-
-opciones.innerHTML=""
-
-juego[i].r.forEach(r=>{
-
-let b=document.createElement("button")
-
-b.className="opcion"
-
-b.innerText=r
-
-b.onclick=()=>{
-
-play(600)
-
-i++
-
-if(i<7){
-mostrar()
-}else{
-terminar()
-}
-
-}
-
-opciones.appendChild(b)
-
-})
-
-}
-
-function terminar(){
-
-play(200)
-
-quiz.classList.add("hidden")
-final.classList.remove("hidden")
-
-let tipo=instintos[Math.floor(Math.random()*instintos.length)]
-
-resultado.innerText=tipo
-
-let p=Math.floor(Math.random()*11)+60
-
-porcentaje.innerText="El "+p+"% de las personas piensan como tú."
-
-barra.style.width=p+"%"
-
-}
-
-function compartir(){
-
-let texto=
-"Descubrí mi instinto en INSTINTO 🧠\n\n"+
-resultado.innerText+"\n"+
-porcentaje.innerText+
-"\n\nTu instinto puede cambiar. Intenta otra vez.\n\nH.B.G."
-
-navigator.share({text:texto})
-
-}
-
-</script>
-
+  <div id="app">
+    <header>
+      <button id="soundBtn" class="icon-btn">🔊 Sonido</button>
+      <h1>INSTINTO 🧠</h1>
+    </header>
+
+    <main>
+      <section id="startScreen">
+        <p class="lead">Responde rápido. Tu primera reacción revela tu instinto.</p>
+        <button id="startBtn" class="primary">Jugar</button>
+        <p class="firma">H.B.G.</p>
+      </section>
+
+      <section id="game" class="hidden">
+        <div id="topRow">
+          <div id="contador" class="contador">Pregunta 1 de 7</div>
+        </div>
+
+        <div class="progress">
+          <div id="progresoBar" class="progresoBar"></div>
+        </div>
+
+        <h2 id="pregunta" class="pregunta"></h2>
+        <p id="frase" class="frase"></p>
+
+        <div id="opciones" class="opciones"></div>
+      </section>
+
+      <section id="result" class="hidden">
+        <h2 id="instinto" class="instinto"></h2>
+        <p id="porcentaje" class="porcentaje"></p>
+
+        <div class="barra">
+          <div id="relleno" class="relleno" style="width:0%"></div>
+        </div>
+
+        <p id="descripcion" class="descripcion"></p>
+
+        <div class="actions">
+          <button id="shareBtn" class="secondary">Compartir</button>
+          <button id="restartBtn" class="primary">Volver a jugar</button>
+        </div>
+
+        <p class="firma">H.B.G.</p>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
