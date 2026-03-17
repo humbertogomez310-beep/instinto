@@ -229,4 +229,37 @@ function reiniciar(){
 
 location.reload()
 
-}  
+}
+// BOTONES DEL HTML NUEVO
+
+document.getElementById("startBtn").onclick = iniciarJuego;
+
+document.getElementById("shareBtn").onclick = compartir;
+
+document.getElementById("restartBtn").onclick = reiniciar;
+
+document.getElementById("challengeBtn").onclick = function(){
+
+let resultado = document.getElementById("tipoInstinto").innerText;
+
+let texto =
+"🔥 Te reto a descubrir tu INSTINTO\n\n"+
+"Yo obtuve:\n"+
+resultado+
+"\n\n¿Puedes superarlo?\n"+
+"https://humbertogomez310-beep.github.io/instinto/";
+
+if(navigator.share){
+
+navigator.share({
+title:"INSTINTO",
+text:texto
+})
+
+}else{
+
+alert(texto)
+
+}
+
+};
