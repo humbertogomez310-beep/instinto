@@ -1,69 +1,67 @@
-pa<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-R451VQLC2J"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-gtag('config', 'G-R451VQLC2J');
-</script>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>INSTINTO</title>
-  <link rel="stylesheet" href="style.css" />
+<title>INSTINTO</title>
+
+<link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
-  <div id="app">
-    <header>
-      <button id="soundBtn" class="icon-btn">🔊 Sonido</button>
-      <h1>INSTINTO 🧠</h1>
-    </header>
 
-    <main>
-      <section id="startScreen">
-        <p class="lead">Responde rápido. Tu primera reacción revela tu instinto.</p>
-        <button id="startBtn" class="primary">Jugar</button>
-        <p class="firma">H.B.G.</p>
-      </section>
+<div id="inicio" class="pantalla">
 
-      <section id="game" class="hidden">
-        <div id="topRow">
-          <div id="contador" class="contador">Pregunta 1 de 7</div>
-        </div>
+<h1>🧠 INSTINTO</h1>
 
-        <div class="progress">
-          <div id="progresoBar" class="progresoBar"></div>
-        </div>
+<p id="contador"></p>
 
-        <h2 id="pregunta" class="pregunta"></h2>
-        <p id="frase" class="frase"></p>
+<p>
+¿Tus decisiones nacen de la lógica,
+de la intuición o de la reacción?
+</p>
 
-        <div id="opciones" class="opciones"></div>
-      </section>
+<button onclick="iniciarJuego()">🚀 Jugar</button>
 
-      <section id="result" class="hidden">
-        <h2 id="instinto" class="instinto"></h2>
-        <p id="porcentaje" class="porcentaje"></p>
+</div>
 
-        <div class="barra">
-          <div id="relleno" class="relleno" style="width:0%"></div>
-        </div>
 
-        <p id="descripcion" class="descripcion"></p>
+<div id="juego" class="pantalla oculto">
 
-        <div class="actions">
-          <button id="shareBtn" class="secondary">Compartir</button>
-          <button id="restartBtn" class="primary">Volver a jugar</button>
-        </div>
+<div id="progreso"></div>
 
-        <p class="firma">H.B.G.</p>
-      </section>
-    </main>
-  </div>
+<h2 id="pregunta"></h2>
 
-  <script src="script.js"></script>
+<p id="frase">Confía en tu primera reacción.</p>
+
+<div id="respuestas"></div>
+
+</div>
+
+
+<div id="resultado" class="pantalla oculto">
+
+<h2 id="tipoInstinto"></h2>
+
+<p id="descripcion"></p>
+
+<div id="barra">
+<div id="porcentaje"></div>
+</div>
+
+<p id="textoPorcentaje"></p>
+
+<p id="instintoExtra"></p>
+
+<button onclick="compartir()">📤 Reta a tus amigos</button>
+
+<button onclick="reiniciar()">🔁 Volver a jugar</button>
+
+</div>
+
+<script src="script.js"></script>
+
 </body>
 </html>
