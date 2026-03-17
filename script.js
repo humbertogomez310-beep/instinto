@@ -1,3 +1,4 @@
+alert("INSTINTO funcionando");
 let preguntas = [
 
 {
