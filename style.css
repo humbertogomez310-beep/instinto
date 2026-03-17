@@ -4,7 +4,6 @@ background:#111;
 color:white;
 text-align:center;
 margin:0;
-padding:0;
 }
 
 .pantalla{
@@ -20,17 +19,12 @@ button{
 padding:15px;
 margin:10px;
 border:none;
-border-radius:12px;
+border-radius:10px;
 font-size:18px;
 cursor:pointer;
 background:#00ff88;
 color:black;
 font-weight:bold;
-transition:0.2s;
-}
-
-button:hover{
-transform:scale(1.05);
 }
 
 #respuestas button{
@@ -53,14 +47,7 @@ overflow:hidden;
 height:100%;
 background:#00ff88;
 width:0%;
-transition:width 1s ease;
-}
-
-#resultado{
-background-image:url("fondo.jpg");
-background-size:cover;
-background-position:center;
-text-shadow:2px 2px 5px black;
+transition:width 1s;
 }
 
 @keyframes fade{
