@@ -2,6 +2,7 @@
 <html lang="es">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -20,6 +21,8 @@
 <p id="contador"></p>
 
 <p>Responde 7 preguntas y descubre cómo funciona tu mente.</p>
+
+<p id="reto"></p>
 
 <button onclick="iniciarJuego()">🚀 Jugar</button>
 
@@ -45,15 +48,21 @@
 
 <p id="descripcion"></p>
 
+<h3 id="instintoExtra"></h3>
+
 <div id="barra">
 <div id="porcentaje"></div>
 </div>
 
 <p id="textoPorcentaje"></p>
 
-<p id="instintoExtra"></p>
+<h3>📊 Ranking de instintos</h3>
+
+<div id="ranking"></div>
 
 <button onclick="compartir()">📤 Compartir resultado</button>
+
+<button onclick="desafio()">🔥 Desafiar a un amigo</button>
 
 <button onclick="reiniciar()">🔁 Volver a jugar</button>
 
