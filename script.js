@@ -228,4 +228,4 @@ function reiniciar(){
 
 location.reload()
 
-} 
+}  
