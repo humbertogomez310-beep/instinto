@@ -187,15 +187,20 @@ document.getElementById("instintoExtra").innerText=
 
 function compartir(){
 
+let resultado=document.getElementById("tipoInstinto").innerText
+
 let texto=
-"Descubrí mi instinto en este test 🧠\n\n"+
-document.getElementById("tipoInstinto").innerText+
-"\n\n¿El tuyo será igual?\n"+
+"🧠 Hice este test de instinto y este fue mi resultado:\n\n"+
+resultado+
+"\n\n¿Tu mente funciona igual?\n"+
 "https://humbertogomez310-beep.github.io/instinto/"
 
 if(navigator.share){
 
-navigator.share({text:texto})
+navigator.share({
+title:"INSTINTO",
+text:texto
+})
 
 }else{
 
