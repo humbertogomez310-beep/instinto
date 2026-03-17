@@ -47,7 +47,15 @@ overflow:hidden;
 height:100%;
 background:#00ff88;
 width:0%;
-transition:width 1s;
+transition:width 1.2s;
+}
+
+#ranking{
+margin-top:20px;
+}
+
+.rankingItem{
+margin:5px;
 }
 
 @keyframes fade{
