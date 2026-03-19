@@ -14,28 +14,35 @@ HTML
       <button id="pauseBtn" class="icon-btn" type="button" aria-label="Pausa">❚❚</button>
     </header>
 
-    <section id="startScreen" class="screen active start-screen">
-      <div class="screen-inner">
-        <h1 class="title">INSTINTO</h1>
-        <p class="subtitle">Responde 7 preguntas rápido y descubre tu instinto dominante.</p>
+    <section id="startScreen" class="screen active screen-start">
+      <div class="card start-card">
+        <div class="title-wrap">
+          <h1 class="title">INSTINTO</h1>
+          <p class="subtitle">Responde 7 preguntas rápido y descubre tu instinto dominante.</p>
+        </div>
+
         <button id="startBtn" class="main-btn" type="button">COMENZAR</button>
+
         <p class="footer">H.B.G.</p>
       </div>
     </section>
 
-    <section id="questionScreen" class="screen question-screen">
-      <div class="screen-inner">
+    <section id="questionScreen" class="screen screen-question">
+      <div class="card question-card">
         <p id="questionProgress" class="progress">Pregunta 1 de 7</p>
         <h2 id="questionText" class="question-text">Pregunta</h2>
-        <div class="image-wrap">
-          <img id="questionImage" alt="Imagen de la pregunta" />
+
+        <div class="image-frame">
+          <img id="questionImage" class="question-image" alt="Imagen de la pregunta" />
         </div>
+
         <div id="answers" class="answers"></div>
+
         <p class="footer">H.B.G.</p>
       </div>
 
-      <div id="pauseOverlay" class="pause-overlay hidden">
-        <div class="pause-card">
+      <div id="pauseOverlay" class="overlay hidden">
+        <div class="overlay-card">
           <h3>PAUSA</h3>
           <p>El juego está detenido.</p>
           <button id="resumeBtn" class="main-btn" type="button">REANUDAR</button>
@@ -43,17 +50,18 @@ HTML
       </div>
     </section>
 
-    <section id="explodeScreen" class="screen explode-screen">
-      <div class="screen-inner">
+    <section id="explodeScreen" class="screen screen-explode">
+      <div class="card explode-card">
         <p class="explode-text">Tu instinto está listo...</p>
         <button id="explodeBtn" class="explode-btn" type="button">💥 EXPLOTAR</button>
         <p class="footer">H.B.G.</p>
       </div>
     </section>
 
-    <section id="resultScreen" class="screen result-screen">
-      <div class="screen-inner">
-        <h2 class="result-brand">INSTINTO</h2>
+    <section id="resultScreen" class="screen screen-result">
+      <div class="card result-card">
+        <h2 class="brand">INSTINTO</h2>
+
         <div class="result-head">
           <div id="resultEmoji" class="result-emoji">🔥</div>
           <h1 id="resultName" class="result-name">VALIENTE</h1>
@@ -61,15 +69,15 @@ HTML
 
         <p id="percentText" class="percent-text">76% de las personas piensan como tú</p>
 
-        <div class="bar-wrap" aria-label="Porcentaje de coincidencia">
+        <div class="bar-wrap">
           <div class="bar-track">
             <div id="percentBar" class="bar-fill"></div>
           </div>
           <div id="percentNumber" class="percent-number">76%</div>
         </div>
 
-        <p id="resultDescription" class="result-description">
-          Tu instinto puede cambiar.<br />
+        <p class="result-desc">
+          Tu instinto puede cambiar.<br>
           Intenta otra vez.
         </p>
 
