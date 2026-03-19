@@ -1,78 +1,75 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>INSTINTO</title>
-<link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet" href="style_v2.css">
+
 </head>
 
 <body>
 
-<div id="app">
+<!-- PANTALLA INICIO -->
+
+<div id="inicio" class="pantalla">
 
 <h1>INSTINTO</h1>
 
-<p id="intro">
-Responde 7 preguntas rápido y descubre tu instinto dominante.
-</p>
-
-<button id="startBtn">COMENZAR</button>
-
-<div id="game" class="hidden">
-
-<h2 id="questionNumber"></h2>
-
-<img id="questionImage" src="" />
-
-<p id="questionText"></p>
-
-<div id="answers"></div>
-
-</div>
-
-<div id="explodeScreen" class="hidden">
-
-<p>Tu instinto está listo...</p>
-
-<button id="explodeBtn">💥 EXPLOTAR</button>
-
-</div>
-
-<div id="resultScreen" class="hidden">
-
-<h2>INSTINTO</h2>
-
-<h1 id="instinctResult"></h1>
-
-<p id="percentText"></p>
-
-<div class="bar">
-<div id="percentBar"></div>
-</div>
-
 <p>
-Tu instinto puede cambiar.<br>
-Intenta otra vez.
+Responde 7 preguntas rápido<br>
+y descubre tu instinto dominante.
 </p>
 
-<div class="buttons">
+<button onclick="iniciarJuego()">COMENZAR</button>
 
-<button onclick="restartGame()">Volver a jugar</button>
-
-<button onclick="shareResult()">Compartir</button>
-
-<button onclick="challengeFriend()">Desafiar a un amigo</button>
+<div class="firma">H.B.G.</div>
 
 </div>
 
+
+<!-- PANTALLA PREGUNTAS -->
+
+<div id="preguntaPantalla" class="pantalla oculto">
+
+<h2 id="contador"></h2>
+
+<p id="pregunta"></p>
+
+<div id="opciones"></div>
+
 </div>
 
-<footer>H.B.G.</footer>
+
+<!-- PANTALLA RESULTADO -->
+
+<div id="resultadoPantalla" class="pantalla oculto">
+
+<h1>INSTINTO</h1>
+
+<h2 id="instintoFinal"></h2>
+
+<p id="porcentaje"></p>
+
+<div class="barra">
+<div id="barraInterior"></div>
+</div>
+
+<p>Tu instinto puede cambiar.<br>Intenta otra vez.</p>
+
+<button onclick="reiniciar()">Volver a jugar</button>
+
+<button onclick="compartir()">Compartir</button>
+
+<button onclick="desafiar()">Desafiar a un amigo</button>
+
+<div class="firma">H.B.G.</div>
 
 </div>
 
-<script src="script.js"></script>
+<script src="script_v2.js"></script>
 
 </body>
 </html>
