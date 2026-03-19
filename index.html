@@ -1,75 +1,88 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>INSTINTO</title>
-
-<link rel="stylesheet" href="style_v2.css">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>INSTINTO</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
+  <main class="app">
+    <header class="topbar">
+      <button id="soundBtn" class="icon-btn" type="button" aria-label="Sonido">🔊</button>
+      <button id="pauseBtn" class="icon-btn" type="button" aria-label="Pausa">❚❚</button>
+    </header>
 
-<!-- PANTALLA INICIO -->
+    <section id="startScreen" class="screen active start-screen">
+      <div class="screen-inner">
+        <h1 class="title">INSTINTO</h1>
+        <p class="subtitle">Responde 7 preguntas rápido y descubre tu instinto dominante.</p>
+        <button id="startBtn" class="main-btn" type="button">COMENZAR</button>
+        <p class="footer">H.B.G.</p>
+      </div>
+    </section>
 
-<div id="inicio" class="pantalla">
+    <section id="questionScreen" class="screen question-screen">
+      <div class="screen-inner">
+        <p id="questionProgress" class="progress">Pregunta 1 de 7</p>
+        <h2 id="questionText" class="question-text">Pregunta</h2>
+        <div class="image-wrap">
+          <img id="questionImage" alt="Imagen de la pregunta" />
+        </div>
+        <div id="answers" class="answers"></div>
+        <p class="footer">H.B.G.</p>
+      </div>
 
-<h1>INSTINTO</h1>
+      <div id="pauseOverlay" class="pause-overlay hidden">
+        <div class="pause-card">
+          <h3>PAUSA</h3>
+          <p>El juego está detenido.</p>
+          <button id="resumeBtn" class="main-btn" type="button">REANUDAR</button>
+        </div>
+      </div>
+    </section>
 
-<p>
-Responde 7 preguntas rápido<br>
-y descubre tu instinto dominante.
-</p>
+    <section id="explodeScreen" class="screen explode-screen">
+      <div class="screen-inner">
+        <p class="explode-text">Tu instinto está listo...</p>
+        <button id="explodeBtn" class="explode-btn" type="button">💥 EXPLOTAR</button>
+        <p class="footer">H.B.G.</p>
+      </div>
+    </section>
 
-<button onclick="iniciarJuego()">COMENZAR</button>
+    <section id="resultScreen" class="screen result-screen">
+      <div class="screen-inner">
+        <h2 class="result-brand">INSTINTO</h2>
+        <div class="result-head">
+          <div id="resultEmoji" class="result-emoji">🔥</div>
+          <h1 id="resultName" class="result-name">VALIENTE</h1>
+        </div>
 
-<div class="firma">H.B.G.</div>
+        <p id="percentText" class="percent-text">76% de las personas piensan como tú</p>
 
-</div>
+        <div class="bar-wrap" aria-label="Porcentaje de coincidencia">
+          <div class="bar-track">
+            <div id="percentBar" class="bar-fill"></div>
+          </div>
+          <div id="percentNumber" class="percent-number">76%</div>
+        </div>
 
+        <p id="resultDescription" class="result-description">
+          Tu instinto puede cambiar.<br />
+          Intenta otra vez.
+        </p>
 
-<!-- PANTALLA PREGUNTAS -->
+        <div class="result-actions">
+          <button id="restartBtn" class="action-btn" type="button">Volver a jugar</button>
+          <button id="shareBtn" class="action-btn" type="button">Compartir</button>
+          <button id="challengeBtn" class="action-btn" type="button">Desafiar a un amigo</button>
+        </div>
 
-<div id="preguntaPantalla" class="pantalla oculto">
+        <p class="footer">H.B.G.</p>
+      </div>
+    </section>
+  </main>
 
-<h2 id="contador"></h2>
-
-<p id="pregunta"></p>
-
-<div id="opciones"></div>
-
-</div>
-
-
-<!-- PANTALLA RESULTADO -->
-
-<div id="resultadoPantalla" class="pantalla oculto">
-
-<h1>INSTINTO</h1>
-
-<h2 id="instintoFinal"></h2>
-
-<p id="porcentaje"></p>
-
-<div class="barra">
-<div id="barraInterior"></div>
-</div>
-
-<p>Tu instinto puede cambiar.<br>Intenta otra vez.</p>
-
-<button onclick="reiniciar()">Volver a jugar</button>
-
-<button onclick="compartir()">Compartir</button>
-
-<button onclick="desafiar()">Desafiar a un amigo</button>
-
-<div class="firma">H.B.G.</div>
-
-</div>
-
-<script src="script_v2.js"></script>
-
+  <script src="script.js"></script>
 </body>
 </html>
