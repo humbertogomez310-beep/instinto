@@ -1,68 +1,59 @@
-%body{
-background:#0d0d0d;
-color:white;
-font-family:Arial;
-text-align:center;
+body{
+
 margin:0;
+font-family:Arial;
+background:black;
+color:white;
+text-align:center;
+
 }
 
-h1{
-font-size:48px;
-margin-top:30px;
+.pantalla{
+
+padding:40px;
+
 }
 
-#intro{
-font-size:18px;
-margin:20px;
+.oculto{
+
+display:none;
+
 }
 
 button{
-padding:15px 25px;
+
+padding:15px 30px;
 margin:10px;
-font-size:16px;
+font-size:18px;
+background:orange;
 border:none;
 border-radius:8px;
 cursor:pointer;
-background:#ff7a00;
-color:white;
+
 }
 
-button:hover{
-opacity:0.8;
-}
+.barra{
 
-.hidden{
-display:none;
-}
-
-#questionImage{
-width:90%;
-max-width:300px;
-margin:15px auto;
-}
-
-.bar{
 width:80%;
-height:25px;
+height:20px;
 background:#333;
-margin:20px auto;
-border-radius:20px;
+margin:auto;
+border-radius:10px;
 overflow:hidden;
+
 }
 
-#percentBar{
+#barraInterior{
+
 height:100%;
-width:0%;
-background:#ff7a00;
-transition:width 2s;
+width:50%;
+background:orange;
+
 }
 
-footer{
+.firma{
+
 margin-top:40px;
-font-size:18px;
-letter-spacing:4px;
-}
+opacity:0.5;
 
-.buttons{
-margin-top:20px;
 }

@@ -1,179 +1,113 @@
-const questions = [
+const preguntas = [
+
 {
-question:"Si escuchas un ruido en la noche...",
-image:"https://picsum.photos/300?1",
-answers:[
-{text:"Ignorarlo",instinct:"Sereno"},
-{text:"Investigar",instinct:"Valiente"},
-{text:"Taparte con la cobija",instinct:"Observador"}
-]
+texto:"Si escuchas un ruido en la noche...",
+opciones:["Ignorarlo","Investigar","Taparte con la cobija"]
 },
+
 {
-question:"Alguien te reta...",
-image:"https://picsum.photos/300?2",
-answers:[
-{text:"Aceptas",instinct:"Valiente"},
-{text:"Piensas primero",instinct:"Estratégico"},
-{text:"Lo ignoras",instinct:"Sereno"}
-]
+texto:"Si alguien te provoca...",
+opciones:["Responder","Ignorar","Planear algo"]
 },
+
 {
-question:"En un grupo tú eres...",
-image:"https://picsum.photos/300?3",
-answers:[
-{text:"El líder",instinct:"Dominante"},
-{text:"El que observa",instinct:"Observador"},
-{text:"El que anima",instinct:"Social"}
-]
+texto:"Si ves una oportunidad...",
+opciones:["Tomarla rápido","Analizarla","Esperar"]
 },
+
 {
-question:"Si ves un peligro...",
-image:"https://picsum.photos/300?4",
-answers:[
-{text:"Enfrentas",instinct:"Valiente"},
-{text:"Proteges a otros",instinct:"Protector"},
-{text:"Analizas",instinct:"Estratégico"}
-]
+texto:"Si estás en peligro...",
+opciones:["Pelear","Escapar","Pensar"]
 },
+
 {
-question:"Cuando decides algo...",
-image:"https://picsum.photos/300?5",
-answers:[
-{text:"Actúas rápido",instinct:"Impulsivo"},
-{text:"Lo piensas",instinct:"Estratégico"},
-{text:"Sigues tu emoción",instinct:"Intenso"}
-]
-},
-{
-question:"En una aventura...",
-image:"https://picsum.photos/300?6",
-answers:[
-{text:"Exploras",instinct:"Libre"},
-{text:"Planeas",instinct:"Estratégico"},
-{text:"Motivas al grupo",instinct:"Social"}
-]
-},
-{
-question:"Tu reacción natural es...",
-image:"https://picsum.photos/300?7",
-answers:[
-{text:"Actuar",instinct:"Valiente"},
-{text:"Pensar",instinct:"Estratégico"},
-{text:"Sentir",instinct:"Intenso"}
-]
+texto:"Si descubres un secreto...",
+opciones:["Guardarlo","Contarlo","Usarlo"]
 }
+
 ];
 
-let currentQuestion=0;
-let scores={};
+let preguntaActual = 0;
 
-const startBtn=document.getElementById("startBtn");
-const game=document.getElementById("game");
-const explodeScreen=document.getElementById("explodeScreen");
-const resultScreen=document.getElementById("resultScreen");
+function iniciarJuego(){
 
-startBtn.onclick=startGame;
+document.getElementById("inicio").classList.add("oculto");
+document.getElementById("preguntaPantalla").classList.remove("oculto");
 
-function startGame(){
-
-startBtn.style.display="none";
-
-game.classList.remove("hidden");
-
-showQuestion();
+mostrarPregunta();
 
 }
 
-function showQuestion(){
+function mostrarPregunta(){
 
-let q=questions[currentQuestion];
+let p = preguntas[preguntaActual];
 
-document.getElementById("questionNumber").innerText=
-"Pregunta "+(currentQuestion+1)+" de 7";
+document.getElementById("contador").innerText =
+"Pregunta "+(preguntaActual+1)+" de "+preguntas.length;
 
-document.getElementById("questionText").innerText=q.question;
+document.getElementById("pregunta").innerText = p.texto;
 
-document.getElementById("questionImage").src=q.image;
+let opcionesHTML="";
 
-let answersDiv=document.getElementById("answers");
-answersDiv.innerHTML="";
+p.opciones.forEach(op=>{
 
-q.answers.forEach(a=>{
+opcionesHTML += `<button onclick="siguiente()">${op}</button>`
 
-let btn=document.createElement("button");
+})
 
-btn.innerText=a.text;
-
-btn.onclick=()=>selectAnswer(a.instinct);
-
-answersDiv.appendChild(btn);
-
-});
+document.getElementById("opciones").innerHTML = opcionesHTML;
 
 }
 
-function selectAnswer(instinct){
+function siguiente(){
 
-scores[instinct]=(scores[instinct]||0)+1;
+preguntaActual++;
 
-currentQuestion++;
+if(preguntaActual >= preguntas.length){
 
-if(currentQuestion>=7){
-
-game.classList.add("hidden");
-
-explodeScreen.classList.remove("hidden");
+mostrarResultado();
 
 }else{
 
-showQuestion();
+mostrarPregunta();
 
 }
 
 }
 
-document.getElementById("explodeBtn").onclick=function(){
+function mostrarResultado(){
 
-explodeScreen.classList.add("hidden");
+document.getElementById("preguntaPantalla").classList.add("oculto");
+document.getElementById("resultadoPantalla").classList.remove("oculto");
 
-showResult();
+let instintos=["Valiente","Estratégico","Prudente","Explorador"];
 
-}
+let instinto = instintos[Math.floor(Math.random()*instintos.length)];
 
-function showResult(){
+let porcentaje = Math.floor(Math.random()*30)+70;
 
-resultScreen.classList.remove("hidden");
+document.getElementById("instintoFinal").innerText = instinto;
 
-let winner=Object.keys(scores).reduce((a,b)=>
-scores[a]>scores[b]?a:b
-);
+document.getElementById("porcentaje").innerText =
+porcentaje+"% de las personas piensan como tú";
 
-document.getElementById("instinctResult").innerText=winner;
-
-let percent=Math.floor(Math.random()*20)+70;
-
-document.getElementById("percentText").innerText=
-percent+"% de las personas piensan como tú";
-
-setTimeout(()=>{
-document.getElementById("percentBar").style.width=percent+"%";
-},200);
+document.getElementById("barraInterior").style.width = porcentaje+"%";
 
 }
 
-function restartGame(){
+function reiniciar(){
 
 location.reload();
 
 }
 
-function shareResult(){
+function compartir(){
 
-alert("Comparte tu instinto con tus amigos");
+alert("Comparte tu resultado con tus amigos");
 
 }
 
-function challengeFriend(){
+function desafiar(){
 
 alert("Desafía a un amigo a descubrir su instinto");
 
