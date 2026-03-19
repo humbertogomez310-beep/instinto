@@ -1,61 +1,78 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>INSTINTO 🧠</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INSTINTO</title>
 <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<header class="top">
-  <button id="soundToggle" class="icon">🔊</button>
-  <h1>🧠 INSTINTO</h1>
-</header>
+<div id="app">
 
-<main>
-  <!-- INICIO -->
-  <section id="inicio" class="pantalla">
-    <p id="contador" class="muted">👥 Cargando...</p>
-    <p class="lead">Responde 7 preguntas rápidas y descubre tu instinto dominante.</p>
-    <div class="controls">
-      <button id="startBtn" class="primary">🚀 Jugar</button>
-    </div>
-  </section>
+<h1>INSTINTO</h1>
 
-  <!-- JUEGO -->
-  <section id="juego" class="pantalla oculto">
-    <div class="top-row">
-      <div id="progreso" class="muted">Pregunta 1 de 7</div>
-      <div id="progressBarWrap"><div id="progressBar"></div></div>
-    </div>
-    <div id="questionCard" class="card fade">
-      <h2 id="pregunta" class="pregunta">Pregunta</h2>
-      <p id="frase" class="frase muted">Frase motivadora</p>
-      <div id="respuestas" class="opciones"></div>
-    </div>
-  </section>
+<p id="intro">
+Responde 7 preguntas rápido y descubre tu instinto dominante.
+</p>
 
-  <!-- RESULTADO -->
-  <section id="resultado" class="pantalla oculto">
-    <div id="resultCard" class="card">
-      <h2 id="tipoInstinto">Resultado</h2>
-      <p id="descripcion" class="muted"></p>
-      <div id="barra">
-        <div id="porcentaje"></div>
-      </div>
-      <p id="textoPorcentaje" class="muted"></p>
-      <div class="result-actions">
-        <button id="shareBtn" class="secondary">📤 Compartir</button>
-        <button id="challengeBtn" class="secondary">🔥 Desafiar a un amigo</button>
-        <button id="restartBtn" class="primary">🔁 Volver a jugar</button>
-      </div>
-    </div>
-  </section>
-</main>
+<button id="startBtn">COMENZAR</button>
 
-<footer class="footer muted small">H.B.G. — INSTINTO</footer>
+<div id="game" class="hidden">
+
+<h2 id="questionNumber"></h2>
+
+<img id="questionImage" src="" />
+
+<p id="questionText"></p>
+
+<div id="answers"></div>
+
+</div>
+
+<div id="explodeScreen" class="hidden">
+
+<p>Tu instinto está listo...</p>
+
+<button id="explodeBtn">💥 EXPLOTAR</button>
+
+</div>
+
+<div id="resultScreen" class="hidden">
+
+<h2>INSTINTO</h2>
+
+<h1 id="instinctResult"></h1>
+
+<p id="percentText"></p>
+
+<div class="bar">
+<div id="percentBar"></div>
+</div>
+
+<p>
+Tu instinto puede cambiar.<br>
+Intenta otra vez.
+</p>
+
+<div class="buttons">
+
+<button onclick="restartGame()">Volver a jugar</button>
+
+<button onclick="shareResult()">Compartir</button>
+
+<button onclick="challengeFriend()">Desafiar a un amigo</button>
+
+</div>
+
+</div>
+
+<footer>H.B.G.</footer>
+
+</div>
 
 <script src="script.js"></script>
+
 </body>
 </html>
