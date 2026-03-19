@@ -1,3 +1,4 @@
+JavaScript
 document.addEventListener("DOMContentLoaded", () => {
   const TOTAL_QUESTIONS = 7;
 
