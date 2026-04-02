@@ -1,214 +1,262 @@
-const startBtn = document.getElementById("start-btn");
+:root{
+  --bg1:#090d1a;
+  --bg2:#140f2d;
+  --card:rgba(18, 20, 38, 0.82);
+  --card-border:rgba(255,255,255,0.12);
+  --text:#ffffff;
+  --muted:rgba(255,255,255,0.76);
+  --accent:#f7b733;
+  --accent2:#6c63ff;
+  --shadow:0 18px 50px rgba(0,0,0,0.35);
+  --radius:24px;
+}
 
-const startScreen = document.getElementById("start-screen");
-const quizScreen = document.getElementById("quiz-screen");
-const loadingScreen = document.getElementById("loading-screen");
-const resultScreen = document.getElementById("result-screen");
+*{
+  box-sizing:border-box;
+}
 
-const questionEl = document.getElementById("question");
-const answersEl = document.getElementById("answers");
-const progressBar = document.getElementById("progress-bar");
-const questionCounter = document.getElementById("question-counter");
+html,body{
+  margin:0;
+  min-height:100%;
+  font-family:Arial, Helvetica, sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at top, rgba(124,92,255,0.35), transparent 28%),
+    radial-gradient(circle at 80% 15%, rgba(247,183,51,0.12), transparent 18%),
+    radial-gradient(circle at 20% 80%, rgba(255,255,255,0.06), transparent 20%),
+    linear-gradient(180deg, var(--bg2), var(--bg1));
+}
 
-const resultTitle = document.getElementById("result-title");
-const resultDescription = document.getElementById("result-description");
-const resultStats = document.getElementById("result-stats");
+body{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+}
 
-const shareBtn = document.getElementById("share-btn");
-const challengeBtn = document.getElementById("challenge-btn");
-const copyBtn = document.getElementById("copy-btn");
-const retryBtn = document.getElementById("retry-btn");
+.app-shell{
+  width:min(520px, 100%);
+}
 
-const appUrl = "https://humbertogomez310-beep.github.io/instinto/";
+.card{
+  background:var(--card);
+  border:1px solid var(--card-border);
+  box-shadow:var(--shadow);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius:var(--radius);
+  padding:28px 22px;
+}
 
-let currentQuestion = 0;
-let scores = { A: 0, B: 0, C: 0, D: 0 };
-let finalResult = null;
+.screen{
+  display:none;
+  animation:fadeIn 0.35s ease;
+}
 
-const questions = [
-  {
-    question: "Estás en una situación inesperada...",
-    answers: [
-      { text: "Actúo de inmediato", type: "A" },
-      { text: "Observo primero", type: "B" },
-      { text: "Pregunto a los demás", type: "C" },
-      { text: "Sigo mi intuición", type: "D" }
-    ]
-  },
-  {
-    question: "Cuando aparece un problema difícil...",
-    answers: [
-      { text: "Lo enfrento sin pensar mucho", type: "A" },
-      { text: "Lo analizo con calma", type: "B" },
-      { text: "Busco consejo", type: "C" },
-      { text: "Espero sentir la respuesta", type: "D" }
-    ]
-  },
-  {
-    question: "Al tomar una decisión importante...",
-    answers: [
-      { text: "Me lanzo rápido", type: "A" },
-      { text: "Primero comparo opciones", type: "B" },
-      { text: "Escucho otras opiniones", type: "C" },
-      { text: "Confío en lo que percibo", type: "D" }
-    ]
-  },
-  {
-    question: "En un grupo normalmente...",
-    answers: [
-      { text: "Tomo el control", type: "A" },
-      { text: "Organizo la estrategia", type: "B" },
-      { text: "Conecto con todos", type: "C" },
-      { text: "Leo el ambiente", type: "D" }
-    ]
-  },
-  {
-    question: "Si algo sale mal...",
-    answers: [
-      { text: "Reacciono rápido", type: "A" },
-      { text: "Busco la causa", type: "B" },
-      { text: "Pido ayuda", type: "C" },
-      { text: "Confío en que se acomoda", type: "D" }
-    ]
-  },
-  {
-    question: "Cuando llegas a un lugar nuevo...",
-    answers: [
-      { text: "Exploro sin miedo", type: "A" },
-      { text: "Observo el terreno", type: "B" },
-      { text: "Me acerco a la gente", type: "C" },
-      { text: "Siento la energía del lugar", type: "D" }
-    ]
-  },
-  {
-    question: "Tu mente normalmente...",
-    answers: [
-      { text: "Actúa", type: "A" },
-      { text: "Analiza", type: "B" },
-      { text: "Conecta", type: "C" },
-      { text: "Intuye", type: "D" }
-    ]
+.screen.active{
+  display:block;
+}
+
+@keyframes fadeIn{
+  from{ opacity:0; transform:translateY(10px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
+.badge{
+  display:inline-block;
+  padding:8px 12px;
+  border-radius:999px;
+  font-size:12px;
+  letter-spacing:1.5px;
+  font-weight:700;
+  background:rgba(255,255,255,0.08);
+  color:#ffe7a3;
+  margin-bottom:14px;
+}
+
+h1,h2{
+  margin:0 0 12px;
+  line-height:1.05;
+}
+
+h1{
+  font-size:clamp(2rem, 7vw, 3.1rem);
+  max-width:10ch;
+}
+
+p{
+  margin:0 0 12px;
+  color:var(--muted);
+  line-height:1.6;
+  font-size:1rem;
+}
+
+.small-note{
+  font-size:0.95rem;
+  opacity:0.9;
+}
+
+.primary-btn,
+.secondary-btn,
+.ghost-btn{
+  width:100%;
+  border:0;
+  border-radius:16px;
+  padding:15px 16px;
+  font-size:1rem;
+  font-weight:800;
+  letter-spacing:0.3px;
+  cursor:pointer;
+  transition:transform .18s ease, opacity .18s ease, box-shadow .18s ease;
+  margin-top:8px;
+}
+
+.primary-btn{
+  color:#18122b;
+  background:linear-gradient(180deg, #ffd56a, #f7b733);
+  box-shadow:0 10px 24px rgba(247,183,51,0.28);
+}
+
+.secondary-btn{
+  color:#fff;
+  background:linear-gradient(180deg, rgba(108,99,255,0.95), rgba(86,78,230,0.95));
+  box-shadow:0 10px 24px rgba(108,99,255,0.22);
+}
+
+.ghost-btn{
+  color:#fff;
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.18);
+}
+
+.primary-btn:hover,
+.secondary-btn:hover,
+.ghost-btn:hover{
+  transform:translateY(-1px);
+}
+
+.primary-btn:active,
+.secondary-btn:active,
+.ghost-btn:active{
+  transform:translateY(1px);
+}
+
+.top-row{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-bottom:20px;
+}
+
+.question-counter{
+  font-size:0.95rem;
+  color:#f5df9b;
+  font-weight:700;
+}
+
+.progress-track{
+  width:100%;
+  height:10px;
+  border-radius:999px;
+  overflow:hidden;
+  background:rgba(255,255,255,0.1);
+}
+
+.progress-bar{
+  width:0%;
+  height:100%;
+  border-radius:999px;
+  background:linear-gradient(90deg, var(--accent), #ffe08d);
+  transition:width 0.25s ease;
+}
+
+.question-title{
+  font-size:clamp(1.4rem, 5vw, 1.8rem);
+  margin-bottom:18px;
+}
+
+.answers{
+  display:grid;
+  gap:12px;
+}
+
+.answer{
+  width:100%;
+  text-align:left;
+  border:1px solid rgba(255,255,255,0.12);
+  background:rgba(255,255,255,0.06);
+  color:#fff;
+  border-radius:18px;
+  padding:15px 16px;
+  font-size:1rem;
+  font-weight:700;
+  cursor:pointer;
+  transition:transform .18s ease, background .18s ease, border-color .18s ease;
+}
+
+.answer:hover{
+  transform:translateY(-1px);
+  background:rgba(255,255,255,0.1);
+  border-color:rgba(255,255,255,0.2);
+}
+
+.answer:active{
+  transform:translateY(1px);
+}
+
+.loader{
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  margin:18px auto 6px;
+  border:6px solid rgba(255,255,255,0.12);
+  border-top-color:var(--accent);
+  animation:spin 0.9s linear infinite;
+}
+
+@keyframes spin{
+  to{ transform:rotate(360deg); }
+}
+
+.result-title{
+  font-size:clamp(1.7rem, 6vw, 2.4rem);
+  margin-top:6px;
+}
+
+.result-description{
+  font-size:1.05rem;
+  line-height:1.7;
+  margin-bottom:16px;
+}
+
+.result-box{
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:18px;
+  padding:16px;
+  margin-bottom:18px;
+}
+
+.result-stats{
+  margin:0;
+  font-size:1rem;
+  color:#ffe39b;
+  font-weight:800;
+}
+
+.buttons{
+  display:grid;
+  gap:10px;
+}
+
+@media (max-width:420px){
+  .card{
+    padding:22px 16px;
+    border-radius:20px;
   }
-];
 
-const results = {
-  A: {
-    title: "INSTINTO VALIENTE",
-    desc: "Actúas antes de que el miedo aparezca. Tu fuerza es la acción y tu energía empuja todo hacia adelante."
-  },
-  B: {
-    title: "INSTINTO ESTRATEGA",
-    desc: "Piensas antes de moverte. Ves patrones, detectas riesgos y eliges con cabeza fría."
-  },
-  C: {
-    title: "INSTINTO SOCIAL",
-    desc: "Tu fuerza está en conectar con personas. Lees el ambiente y encuentras apoyo con naturalidad."
-  },
-  D: {
-    title: "INSTINTO INTUITIVO",
-    desc: "Sientes cosas que otros no ven. Tu instinto capta señales, emociones y detalles invisibles."
+  h1{
+    max-width:unset;
   }
-};
-
-startBtn.addEventListener("click", startQuiz);
-shareBtn.addEventListener("click", shareWhatsApp);
-challengeBtn.addEventListener("click", challengeFriend);
-copyBtn.addEventListener("click", copyLink);
-retryBtn.addEventListener("click", resetQuiz);
-
-function startQuiz() {
-  startScreen.classList.remove("active");
-  quizScreen.classList.add("active");
-  currentQuestion = 0;
-  scores = { A: 0, B: 0, C: 0, D: 0 };
-  finalResult = null;
-  progressBar.style.width = "0%";
-  showQuestion();
-}
-
-function showQuestion() {
-  const q = questions[currentQuestion];
-
-  questionCounter.textContent = `Pregunta ${currentQuestion + 1} de ${questions.length}`;
-  questionEl.textContent = q.question;
-  answersEl.innerHTML = "";
-
-  progressBar.style.width = `${(currentQuestion / questions.length) * 100}%`;
-
-  q.answers.forEach(answer => {
-    const btn = document.createElement("button");
-    btn.className = "answer";
-    btn.type = "button";
-    btn.textContent = answer.text;
-    btn.addEventListener("click", () => selectAnswer(answer.type));
-    answersEl.appendChild(btn);
-  });
-}
-
-function selectAnswer(type) {
-  scores[type] += 1;
-  currentQuestion += 1;
-
-  if (currentQuestion < questions.length) {
-    showQuestion();
-  } else {
-    showLoadingThenResult();
-  }
-}
-
-function showLoadingThenResult() {
-  quizScreen.classList.remove("active");
-  loadingScreen.classList.add("active");
-
-  setTimeout(() => {
-    loadingScreen.classList.remove("active");
-    resultScreen.classList.add("active");
-
-    finalResult = getBestResult();
-    resultTitle.textContent = finalResult.title;
-    resultDescription.textContent = finalResult.desc;
-    resultStats.textContent = "Solo el 18% tiene este instinto";
-    progressBar.style.width = "100%";
-  }, 1400);
-}
-
-function getBestResult() {
-  const maxScore = Math.max(...Object.values(scores));
-  const topTypes = Object.keys(scores).filter(type => scores[type] === maxScore);
-  const chosenType = topTypes[Math.floor(Math.random() * topTypes.length)];
-  return results[chosenType];
-}
-
-function shareWhatsApp() {
-  const text = `Mi resultado en INSTINTO es: ${finalResult?.title || "INSTINTO"}.\n${finalResult?.desc || ""}\n\nHaz tu prueba aquí: ${appUrl}`;
-  const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
-  window.open(url, "_blank", "noopener,noreferrer");
-}
-
-function challengeFriend() {
-  const text = `Te reto a hacer INSTINTO y ver qué tipo te sale.\n\n${appUrl}`;
-  const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
-  window.open(url, "_blank", "noopener,noreferrer");
-}
-
-async function copyLink() {
-  try {
-    await navigator.clipboard.writeText(appUrl);
-    const original = copyBtn.textContent;
-    copyBtn.textContent = "ENLACE COPIADO";
-    setTimeout(() => {
-      copyBtn.textContent = original;
-    }, 1400);
-  } catch (error) {
-    alert("No se pudo copiar el enlace. Puedes copiarlo manualmente: " + appUrl);
-  }
-}
-
-function resetQuiz() {
-  resultScreen.classList.remove("active");
-  startScreen.classList.add("active");
-  currentQuestion = 0;
-  scores = { A: 0, B: 0, C: 0, D: 0 };
-  finalResult = null;
-  progressBar.style.width = "0%";
 }
