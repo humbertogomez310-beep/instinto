@@ -1,93 +1,57 @@
-HTML
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#140f2d" />
   <title>INSTINTO</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="app">
-    <header class="topbar">
-      <button id="soundBtn" class="icon-btn" type="button" aria-label="Sonido">🔊</button>
-      <button id="pauseBtn" class="icon-btn" type="button" aria-label="Pausa">❚❚</button>
-    </header>
-
-    <section id="startScreen" class="screen active screen-start">
-      <div class="card start-card">
-        <div class="title-wrap">
-          <h1 class="title">INSTINTO</h1>
-          <p class="subtitle">Responde 7 preguntas rápido y descubre tu instinto dominante.</p>
-        </div>
-
-        <button id="startBtn" class="main-btn" type="button">COMENZAR</button>
-
-        <p class="footer">H.B.G.</p>
-      </div>
+  <main class="app-shell">
+    <section id="start-screen" class="screen active card">
+      <div class="badge">INSTINTO</div>
+      <h1>¿Tu instinto decide por ti?</h1>
+      <p>
+        Responde 7 preguntas rápidas y descubre qué tipo de instinto domina tus decisiones.
+      </p>
+      <p class="small-note">Toma menos de 30 segundos.</p>
+      <button id="start-btn" class="primary-btn">DESCUBRIR MI INSTINTO</button>
     </section>
 
-    <section id="questionScreen" class="screen screen-question">
-      <div class="card question-card">
-        <p id="questionProgress" class="progress">Pregunta 1 de 7</p>
-        <h2 id="questionText" class="question-text">Pregunta</h2>
-
-        <div class="image-frame">
-          <img id="questionImage" class="question-image" alt="Imagen de la pregunta" />
-        </div>
-
-        <div id="answers" class="answers"></div>
-
-        <p class="footer">H.B.G.</p>
-      </div>
-
-      <div id="pauseOverlay" class="overlay hidden">
-        <div class="overlay-card">
-          <h3>PAUSA</h3>
-          <p>El juego está detenido.</p>
-          <button id="resumeBtn" class="main-btn" type="button">REANUDAR</button>
+    <section id="quiz-screen" class="screen card">
+      <div class="top-row">
+        <div class="question-counter" id="question-counter">Pregunta 1 de 7</div>
+        <div class="progress-track" aria-hidden="true">
+          <div id="progress-bar" class="progress-bar"></div>
         </div>
       </div>
+
+      <h2 id="question" class="question-title"></h2>
+      <div id="answers" class="answers"></div>
     </section>
 
-    <section id="explodeScreen" class="screen screen-explode">
-      <div class="card explode-card">
-        <p class="explode-text">Tu instinto está listo...</p>
-        <button id="explodeBtn" class="explode-btn" type="button">💥 EXPLOTAR</button>
-        <p class="footer">H.B.G.</p>
-      </div>
+    <section id="loading-screen" class="screen card">
+      <div class="badge">ANALIZANDO</div>
+      <h2>Analizando tu instinto...</h2>
+      <div class="loader"></div>
+      <p class="small-note">Esto tarda solo un instante.</p>
     </section>
 
-    <section id="resultScreen" class="screen screen-result">
-      <div class="card result-card">
-        <h2 class="brand">INSTINTO</h2>
+    <section id="result-screen" class="screen card">
+      <div class="badge">TU RESULTADO</div>
+      <h2 id="result-title" class="result-title"></h2>
+      <p id="result-description" class="result-description"></p>
 
-        <div class="result-head">
-          <div id="resultEmoji" class="result-emoji">🔥</div>
-          <h1 id="resultName" class="result-name">VALIENTE</h1>
-        </div>
+      <div class="result-box">
+        <p id="result-stats" class="result-stats"></p>
+      </div>
 
-        <p id="percentText" class="percent-text">76% de las personas piensan como tú</p>
-
-        <div class="bar-wrap">
-          <div class="bar-track">
-            <div id="percentBar" class="bar-fill"></div>
-          </div>
-          <div id="percentNumber" class="percent-number">76%</div>
-        </div>
-
-        <p class="result-desc">
-          Tu instinto puede cambiar.<br>
-          Intenta otra vez.
-        </p>
-
-        <div class="result-actions">
-          <button id="restartBtn" class="action-btn" type="button">Volver a jugar</button>
-          <button id="shareBtn" class="action-btn" type="button">Compartir</button>
-          <button id="challengeBtn" class="action-btn" type="button">Desafiar a un amigo</button>
-        </div>
-
-        <p class="footer">H.B.G.</p>
+      <div class="buttons">
+        <button id="share-btn" class="primary-btn">COMPARTIR EN WHATSAPP</button>
+        <button id="challenge-btn" class="secondary-btn">RETAR A UN AMIGO</button>
+        <button id="copy-btn" class="secondary-btn">COPIAR ENLACE</button>
+        <button id="retry-btn" class="ghost-btn">INTENTAR OTRA VEZ</button>
       </div>
     </section>
   </main>
